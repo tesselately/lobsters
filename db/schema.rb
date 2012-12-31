@@ -21,11 +21,11 @@ ActiveRecord::Schema.define(:version => 20131018201413) do
     t.integer  "user_id",                                                                                   :null => false
     t.integer  "parent_comment_id"
     t.integer  "thread_id"
-    t.text     "comment",            :limit => 16777215,                                                    :null => false
+    t.text     "comment",                                                                                   :null => false
     t.integer  "upvotes",                                                                :default => 0,     :null => false
     t.integer  "downvotes",                                                              :default => 0,     :null => false
     t.decimal  "confidence",                             :precision => 20, :scale => 19, :default => 0.0,   :null => false
-    t.text     "markeddown_comment", :limit => 16777215
+    t.text     "markeddown_comment"
     t.boolean  "is_deleted",                                                             :default => false
     t.boolean  "is_moderated",                                                           :default => false
   end
