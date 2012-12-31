@@ -69,11 +69,11 @@ end
 # config/initializers/production.rb
 class << Rails.application
   def domain
-    "lobste.rs"
+    "moonstars.org"
   end
 
   def name
-    "Lobsters"
+    "Moonstars"
   end
 
   # used as mailing list prefix and countinual prefix, cannot have spaces
