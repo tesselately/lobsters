@@ -62,6 +62,7 @@ GEM
     multi_json (1.7.1)
     nokogiri (1.5.6)
     oauth (0.4.7)
+    pg (0.15.1)
     polyglot (0.3.3)
     rack (1.4.5)
     rack-cache (1.2)
@@ -137,9 +138,10 @@ DEPENDENCIES
   jquery-rails
   machinist
   mail
-  mysql2!
   nokogiri
   oauth
+  nokogiri
+  pg
   rails (= 3.2.13)
   rake (= 10.0.3)
   rdiscount
