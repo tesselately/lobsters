@@ -12,7 +12,13 @@ class Keystore < ActiveRecord::Base
       Keystore.connection.execute("INSERT OR REPLACE INTO " <<
         "#{Keystore.table_name} (`key`, `value`) VALUES " <<
         "(#{q(key)}, #{q(value)})")
-    else
+    elsif Keystore.connection.adapter_name == "PostgreSQL"
+      Keystore.connection.execute("UPDATE #{Keystore.table_name} " +
+        "SET value = #{q(value)} WHERE key = #{q(key)}")
+      Keystore.connection.execute("INSERT INTO #{Keystore.table_name} (" +
+        "key, value) SELECT #{q(key)}, #{q(value)} " +
+        "WHERE NOT EXISTS (SELECT 1 FROM #{Keystore.table_name} WHERE key = #{q(key)})")
+    else  # mysql
       Keystore.connection.execute("INSERT INTO #{Keystore.table_name} (" +
         "`key`, `value`) VALUES (#{q(key)}, #{q(value)}) ON DUPLICATE KEY " +
         "UPDATE `value` = #{q(value)}")
@@ -35,7 +41,13 @@ class Keystore < ActiveRecord::Base
           "(#{q(key)}, 0)")
         Keystore.connection.execute("UPDATE #{Keystore.table_name} " <<
           "SET `value` = `value` + #{q(amount)} WHERE `key` = #{q(key)}")
-      else
+      elsif Keystore.connection.adapter_name == "PostgreSQL"
+        Keystore.connection.execute("INSERT INTO #{Keystore.table_name} (" +
+          "key, value) SELECT #{q(key)}, 0 " +
+          "WHERE NOT EXISTS (SELECT 1 FROM #{Keystore.table_name} WHERE key = #{q(key)})")
+        Keystore.connection.execute("UPDATE #{Keystore.table_name} " +
+          "SET value = value + 1 WHERE key = #{q(key)}")
+      else  # mysql
         Keystore.connection.execute("INSERT INTO #{Keystore.table_name} (" +
           "`key`, `value`) VALUES (#{q(key)}, #{q(amount)}) ON DUPLICATE KEY " +
           "UPDATE `value` = `value` + #{q(amount)}")
