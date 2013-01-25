@@ -56,13 +56,18 @@ a.tag {
 }
 
 a.tag_is_media {
-	background-color: #f5d1fa;
-	border-color: #a26dc8;
+	background-color: #d1dcfa;
+	border-color: #94a5b2;
 }
 
 a.tag_project, a.tag_interview {
 	background-color: #f9ddde;
 	border-color: #f0b2b8;
+}
+
+a.tag_nsfw {
+	background-color: #fcd4d9;
+	border-color: #b5979b;
 }
 
 span.fakea {
